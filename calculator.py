@@ -3,7 +3,7 @@
 import math
 import ply.lex as lex
 import ply.yacc as yacc
-
+import sys
 tokens = (
     'NAME',
     'NUMBER_INT', 'NUMBER_DOUBLE',
@@ -265,13 +265,14 @@ def p_expression_name(t):
 def p_error(t):
     print('Syntax error at \'%s\'' % t.value)
 
-# lexer = lex.lex()
-lexer = lex.lex(optimize=1)
-# parser = yacc.yacc()
-parser = yacc.yacc(debug=0, write_tables=0)
-while True:
-    try:
-        s = input('> ')
-    except EOFError:
-        break
-    parser.parse(s)
+
+def calculate(content):
+    # lexer = lex.lex()
+    lexer = lex.lex(optimize=1)
+    # parser = yacc.yacc()
+    parser = yacc.yacc(debug=0, write_tables=0)
+    return parser.parse(content)
+
+if __name__ == "__main__":
+    calculate(sys.argv[1])
+    
